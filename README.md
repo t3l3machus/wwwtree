@@ -8,6 +8,7 @@
 A utility to assist pentesters with transfering files back & forth victim machines by web hosting directories and auto appending URL prefixes to every file and more.
 
 ### Preview
+![image](https://user-images.githubusercontent.com/75489922/204158750-90ad250c-7787-4fde-92c3-99dae65e5444.png)
 
 ## Description
 wwwtree does the following:
