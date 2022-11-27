@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/Maintained%3F-Yes-96c40f">
 
 ## Purpose
-A utility to assist pentesters with transfering files back & forth victim machines by web hosting directories and auto appending URL prefixes to every file and more.
+A utility to assist pentesters with transfering files back & forth victim machines by web hosting local directory structures, auto append URL prefixes to every file and more.
 
 ### Preview
 ![image](https://user-images.githubusercontent.com/75489922/204158750-90ad250c-7787-4fde-92c3-99dae65e5444.png)
