@@ -222,8 +222,9 @@ def wwwtree(root_dir, intent = 0, depth = '', depth_level = depth_level):
 				
 				if ext.lower() in hide_extensions:
 					continue
-					
-			filename = ('http://' + lhost + root_dir.replace(args.root_path, '/') + HIGHLIGHT + root_files[i] + END)
+
+			filename = (lhost + root_dir.replace(args.root_path, '/') + HIGHLIGHT + root_files[i] + END)
+			filename = 'http://' + re.sub('/+', '/', filename) 
 
 			''' Print file branch '''
 			if not keywords:
@@ -302,24 +303,22 @@ def wwwtree(root_dir, intent = 0, depth = '', depth_level = depth_level):
 
 # -------------- http Server -------------- #
 class HTTPRequestHandler(BaseHTTPRequestHandler):
-	
-	protocol_version = 'HTTP/1.1'
-	global path
-	
+		
 	def do_GET(self):
 
 		try:
 			
-			requested_resource = open(args.root_path[0:-1] + self.path, 'rb')
+			requested_resource = open(args.root_path + self.path, 'rb')
 			data = requested_resource.read()
 			requested_resource.close()
 			self.send_response(200)
 			self.send_header('Access-Control-Allow-Origin', '*')
 			self.end_headers()
-			self.wfile.write(bytes(data))
-			return
+			self.wfile.write(data)
+			self.connection.close()
 			
 		except:
+			
 			self.send_response(404)
 			self.end_headers()
 			self.wfile.write(bytes('NOT FOUND', "utf-8"))
@@ -337,20 +336,26 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
 			return
 			
 		else:
-					
-			file_path = '/tmp/' + resource
 			
-			# Check if file exists
-			file_path = (file_path + '_' + uuid4().hex[0:6]) if os.path.exists('/tmp/' + resource) else file_path
-						
-			length = int(self.headers['Content-Length'])
-			
-			with open(file_path, 'wb') as f:
-				f.write(self.rfile.read(length))
+			try:	
+				file_path = '/tmp/' + resource
 				
-			self.send_response(201, "Created")
-			self.wfile.write("File received.\n".encode())
-			return
+				# Check if file exists
+				file_path = (file_path + '_' + uuid4().hex[0:6]) if os.path.exists('/tmp/' + resource) else file_path
+							
+				length = int(self.headers['Content-Length'])
+				content = self.rfile.read(length)
+				 
+				with open(file_path, 'wb') as f:
+					f.write(content)
+					
+				self.send_response(201, "Created")
+				self.end_headers()
+				self.wfile.write("File received.\n".encode())
+				
+			except Exception as e:
+				print(f'[{INFO}] Last received PUT request failed: {e}')
+				pass
 			
 
 
