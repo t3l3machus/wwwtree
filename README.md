@@ -13,7 +13,7 @@ A utility for quickly and easily locating, web hosting and transferring resource
 ## Description
 wwwtree does the following:
  - hosts a specified root directory and prints the contents in a tree-like format. Every file is translated to it's equivalent server URL path so you can quickly copy it and use a web client to transfer it to the victim.
- - Filters out files that contain specific substrings based on user provided keywords (use `-k` to parse comma seperated values). Handy for quickly locating resources located in deep and populated directory structures.
+ - Filters out files that contain specific substrings based on user provided keywords (use `-k` to parse comma seperated values). Handy for quickly locating resources saved in deep and populated directory structures.
  - Automatically hides from the output files and folders that are most likely not in the scope of enumeration / exploitation (e.g., txt, yml, docx files or .git directories). You can control this behaviour by editing the list variables `hide_extensions` and `hide_dirs` in the source.
  - The wwwtree python http server handler supports PUT requests and by default saves files in `/tmp` (you can change that in the source). You can use it to transfer files from the victim to the attacker machine.
 
