@@ -3,7 +3,7 @@
 # Author: Panagiotis Chartas (t3l3machus)
 # https://github.com/t3l3machus
 
-import ssl, os, re, argparse
+import ssl, os, re, argparse, urllib.parse
 from threading import Thread
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
@@ -327,7 +327,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
 		
 	def do_PUT(self):
 		
-		resource = self.path.split("/")[-1]
+		resource = urllib.parse.unquote(self.path).split("/")[-1]
 		
 		if resource.endswith('/') or not resource:
 			self.send_response(400)
