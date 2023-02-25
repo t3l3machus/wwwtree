@@ -196,7 +196,7 @@ parent = (chr(9474) + '   ') if not ASCII else '|   '
 def wwwtree(root_dir, intent = 0, depth = '', depth_level = depth_level):
 
 	try:
-		global total_dirs_processed, total_files_processed, lhost
+		global total_dirs_processed, total_files_processed, lhost, server_port
 		root_dirs = next(os.walk(root_dir))[1]
 		root_files = next(os.walk(root_dir))[2]
 		total_dirs = len(root_dirs)
@@ -223,7 +223,7 @@ def wwwtree(root_dir, intent = 0, depth = '', depth_level = depth_level):
 				if ext.lower() in hide_extensions:
 					continue
 
-			filename = (lhost + root_dir.replace(args.root_path, '/') + HIGHLIGHT + root_files[i] + END)
+			filename = (lhost + ':' + str(server_port) + root_dir.replace(args.root_path, '/') + HIGHLIGHT + root_files[i] + END)
 			filename = 'http://' + re.sub('/+', '/', filename) 
 
 			''' Print file branch '''
